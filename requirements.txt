@@ -1,0 +1,4 @@
+httpx>=0.27.0
+mcp[cli]>=1.6.0
+python-dotenv>=1.0.0   # optionnel — chargement du fichier .env
+uvicorn>=0.29.0        # serveur ASGI (installé avec mcp[cli])
