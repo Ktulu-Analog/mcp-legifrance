@@ -1,6 +1,6 @@
 # mcp-legifrance
 
-Serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable donnant accès à l'intégralité de l'**API Légifrance** (PISTE / DILA) depuis n'importe quel client MCP : Claude Desktop, Claude Code, applications Tauri/Electron, ou tout LLM compatible MCP.
+Serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable donnant accès à l'intégralité de l'**API Légifrance** (PISTE / DILA) depuis n'importe quel client MCP : Demeter, Claude Desktop, Claude Code, applications Tauri/Electron, ou tout LLM compatible MCP.
 
 **62 outils** couvrant les codes, lois, décrets, Journal Officiel, conventions collectives, jurisprudence, questions parlementaires, circulaires, et plus.
 
@@ -17,6 +17,8 @@ Serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable donnant accès �
 - Python 3.11+
 - Un compte sur [piste.gouv.fr](https://piste.gouv.fr) avec accès à l'API Légifrance (gratuit)
 
+> **Note :** Si vous utilisez déjà `mcp-judilibre`, les identifiants PISTE sont les mêmes. Il suffit d'ajouter la souscription à l'API Légifrance dans votre application PISTE existante.
+
 ---
 
 ## Obtenir les identifiants API Légifrance
@@ -27,11 +29,11 @@ L'API Légifrance est exposée via la plateforme **PISTE** (Plateforme d'Interm�
 
 Rendez-vous sur [https://piste.gouv.fr](https://piste.gouv.fr) et cliquez sur **S'inscrire**. L'inscription est gratuite et ouverte à tous (particuliers, entreprises, collectivités).
 
-### 2. Créer une application
+### 2. Créer une application (ou réutiliser l'existante)
 
 Une fois connecté :
 
-1. Allez dans **Mes applications** → **Nouvelle application**
+1. Allez dans **Mes applications** → **Nouvelle application** (ou ouvrez votre application existante)
 2. Donnez un nom à votre application (ex: `mcp-legifrance`)
 3. Sélectionnez l'**environnement Sandbox** pour commencer (accès immédiat, données réelles en lecture seule)
 
@@ -53,12 +55,22 @@ Dans votre application PISTE, copiez :
 
 ## Installation
 
+### Installation locale (Python)
+
 ```bash
 git clone https://github.com/ktulu-analog/mcp-legifrance.git
 cd mcp-legifrance
 python -m venv .venv
 source .venv/bin/activate   # Windows : .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+### Installation via Docker
+
+```bash
+git clone https://github.com/ktulu-analog/mcp-legifrance.git
+cd mcp-legifrance
+docker build -t mcp-legifrance .
 ```
 
 ---
@@ -87,6 +99,8 @@ export LEGIFRANCE_CLIENT_SECRET=votre_client_secret
 
 ## Démarrage
 
+### En local (Python)
+
 ```bash
 python server.py
 ```
@@ -105,6 +119,17 @@ Exemple sur un port personnalisé :
 python server.py --port 8080
 ```
 
+### Via Docker
+
+```bash
+docker run -p 6502:6502 \
+  -e LEGIFRANCE_CLIENT_ID=votre_client_id \
+  -e LEGIFRANCE_CLIENT_SECRET=votre_client_secret \
+  mcp-legifrance
+```
+
+Le serveur peut tourner sur n'importe quelle machine accessible en réseau. Les clients MCP se connectent alors à `http://adresse-du-serveur:6502/mcp` — le serveur n'a pas besoin d'être sur la même machine que le client.
+
 Le serveur est accessible à `http://localhost:6502/mcp`.
 
 ---
@@ -120,6 +145,21 @@ Dans `claude_desktop_config.json` :
   "mcpServers": {
     "legifrance": {
       "url": "http://localhost:6502/mcp"
+    }
+  }
+}
+```
+
+Pour utiliser les deux serveurs simultanément avec `mcp-judilibre` :
+
+```json
+{
+  "mcpServers": {
+    "legifrance": {
+      "url": "http://localhost:6502/mcp"
+    },
+    "judilibre": {
+      "url": "http://localhost:6501/mcp"
     }
   }
 }
@@ -232,6 +272,17 @@ Tout client supportant la spec MCP 2025-03-26 HTTP Streamable peut se connecter 
 | `legifrance_suggerer_acco` | Suggestions d'accords |
 | `legifrance_suggerer_pdc` | Suggestions plan de classement |
 | `legifrance_commit_id` | Identifiant de version du serveur |
+
+---
+
+## Utilisation combinée avec mcp-judilibre
+
+`mcp-legifrance` et `mcp-judilibre` sont complémentaires :
+
+- **Légifrance** → textes législatifs et réglementaires, jurisprudence administrative (Conseil d'État, Conseil constitutionnel, CNIL…)
+- **JUDILIBRE** → décisions de justice Open Data (Cour de cassation, cours d'appel, tribunaux judiciaires)
+
+Les deux serveurs peuvent tourner simultanément sur des ports différents (6502 et 6501 par défaut) et être déclarés dans le même fichier de configuration MCP.
 
 ---
 
