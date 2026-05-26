@@ -6,6 +6,12 @@ Serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable donnant accès �
 
 ---
 
+## Aperçu
+
+![mcp-legifrance en action dans Demeter](screenshots/legifrance-demeter.png)
+
+---
+
 ## Prérequis
 
 - Python 3.11+
