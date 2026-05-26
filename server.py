@@ -94,12 +94,14 @@ class _LegifranceClient:
         )
 
     def _get_token(self) -> str:
-        client_id     = os.getenv("LEGIFRANCE_CLIENT_ID")
-        client_secret = os.getenv("LEGIFRANCE_CLIENT_SECRET")
+        client_id     = os.getenv("LEGIFRANCE_CLIENT_ID", "").strip()
+        client_secret = os.getenv("LEGIFRANCE_CLIENT_SECRET", "").strip()
         if not client_id or not client_secret:
             raise RuntimeError(
-                "Identifiants Légifrance manquants.\n"
-                "Définissez LEGIFRANCE_CLIENT_ID et LEGIFRANCE_CLIENT_SECRET."
+                "Identifiants Légifrance manquants. "
+                "Définissez les variables d'environnement "
+                "LEGIFRANCE_CLIENT_ID et LEGIFRANCE_CLIENT_SECRET "
+                "(obtenez-les sur https://piste.gouv.fr)."
             )
         if self._token and time.time() < (self._token_expiry - 60):
             return self._token
@@ -2007,7 +2009,12 @@ if __name__ == "__main__":
 
     logger.info(f"🚀 Démarrage du serveur MCP Légifrance sur http://{args.host}:{args.port}{args.path}")
     logger.info("   62 outils disponibles — spec MCP 2025-03-26 HTTP Streamable")
-    logger.info("   Prérequis : LEGIFRANCE_CLIENT_ID et LEGIFRANCE_CLIENT_SECRET dans l'environnement")
+    if not os.getenv("LEGIFRANCE_CLIENT_ID") or not os.getenv("LEGIFRANCE_CLIENT_SECRET"):
+        logger.warning("   ⚠️  LEGIFRANCE_CLIENT_ID / LEGIFRANCE_CLIENT_SECRET non définis")
+        logger.warning("   ⚠️  Le serveur démarre mais les outils retourneront une erreur sans ces variables")
+        logger.warning("   ⚠️  Obtenez vos credentials sur https://piste.gouv.fr")
+    else:
+        logger.info("   ✅ Credentials Légifrance détectés")
 
     mcp.settings.stateless_http = True
 
