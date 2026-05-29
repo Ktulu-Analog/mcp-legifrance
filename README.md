@@ -1,8 +1,18 @@
 # mcp-legifrance
 
-Serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable donnant accès à l'intégralité de l'**API Légifrance** (PISTE / DILA) depuis n'importe quel client MCP : Demeter, Claude Desktop, Claude Code, applications Tauri/Electron, ou tout LLM compatible MCP.
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![MCP](https://img.shields.io/badge/MCP-HTTP%20Streamable-6B46C1?logo=anthropic&logoColor=white)](https://modelcontextprotocol.io/)
+[![Docker](https://img.shields.io/badge/Docker-compatible-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![PISTE](https://img.shields.io/badge/API-Légifrance%20PISTE-003189)](https://piste.gouv.fr)
 
-**62 outils** couvrant les codes, lois, décrets, Journal Officiel, conventions collectives, jurisprudence, questions parlementaires, circulaires, et plus.
+---
+
+`mcp-legifrance` expose l'intégralité de l'**API Légifrance** (PISTE / DILA) sous forme de serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable. Il donne à n'importe quel LLM compatible MCP un accès direct au droit français — codes, lois, décrets, Journal Officiel, conventions collectives, jurisprudence, circulaires, délibérations CNIL, dossiers et débats parlementaires.
+
+Avec **62 outils**, c'est la couverture la plus complète de l'API Légifrance disponible en MCP : consultation de codes article par article, navigation dans l'historique des versions, recherche plein texte tous fonds, export des bulletins BOCC/BODMR, accès aux accords d'entreprise et bien plus. Compatible Claude Desktop, Claude Code, Demeter ou toute application Tauri/Electron.
+
+Il partage ses identifiants PISTE avec `mcp-judilibre` et peut tourner simultanément sur le même hôte.
 
 ---
 
