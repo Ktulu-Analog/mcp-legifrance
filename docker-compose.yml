@@ -1,0 +1,27 @@
+services:
+
+  mcp-legifrance:
+    build: ./mcp-legifrance
+    environment:
+      - LEGIFRANCE_CLIENT_ID=${LEGIFRANCE_CLIENT_ID}
+      - LEGIFRANCE_CLIENT_SECRET=${LEGIFRANCE_CLIENT_SECRET}
+    # Pas de `ports:` — inutile si seul le client y accède.
+    # Décommenter pour tester depuis l'hôte avec curl :
+    # ports:
+    #   - "6502:6502"
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:6502/mcp')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  client:
+    image: ton-image-client   # ou `build: ./mon-client`
+    environment:
+      - MCP_URL=http://mcp-legifrance:6502/mcp
+    depends_on:
+      mcp-legifrance:
+        condition: service_healthy   # attend que le MCP soit prêt
+    restart: unless-stopped
