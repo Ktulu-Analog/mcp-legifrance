@@ -8,6 +8,11 @@
 
 ---
 
+**VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
+**VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
+**VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
+
+
 `mcp-legifrance` expose l'intégralité de l'**API Légifrance** (PISTE / DILA) sous forme de serveur [MCP](https://modelcontextprotocol.io/) HTTP Streamable. Il donne à n'importe quel LLM compatible MCP un accès direct au droit français — codes, lois, décrets, Journal Officiel, conventions collectives, jurisprudence, circulaires, délibérations CNIL, dossiers et débats parlementaires.
 
 Avec **62 outils** et **11 resources de documentation**, c'est la couverture la plus complète de l'API Légifrance disponible en MCP. Points forts :
