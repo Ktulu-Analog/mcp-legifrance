@@ -9,7 +9,9 @@
 ---
 
 **VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
+
 **VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
+
 **VERSION ARCHIVEE, utilisez le seveur MCP Légifrance du pack demeter-mcp-pack à la place**
 
 
